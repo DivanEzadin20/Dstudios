@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D STUDIOS | Admin Upload</title>
+    <meta name="robots" content="noindex, nofollow"> <!-- Prevent indexing -->
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Additional styles for the admin page */
+        .admin-section {
+            padding: 6rem 0;
+            background-color: var(--color-background-alt);
+            min-height: 100vh;
+        }
+
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .admin-header h1 {
+            margin: 0;
+        }
+
+        .login-form,
+        .upload-form {
+            background-color: white;
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-md);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--color-border);
+            border-radius: var(--border-radius-sm);
+            font-family: inherit;
+            font-size: 1rem;
+            transition: border-color var(--transition-fast);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--color-primary);
+        }
+
+        select.form-control {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 16px;
+        }
+
+        textarea.form-control {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+            margin-bottom: 0;
+        }
+
+        .preview-container {
+            margin-top: 2rem;
+            border: 1px solid var(--color-border);
+            border-radius: var(--border-radius);
+            padding: 1rem;
+        }
+
+        .preview-card {
+            max-width: 320px;
+            margin: 0 auto;
+        }
+
+        .image-preview {
+            width: 100%;
+            height: 200px;
+            background-color: #f0f0f0;
+            border-radius: var(--border-radius) var(--border-radius) 0 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-text-light);
+            font-size: 0.9rem;
+            overflow: hidden;
+        }
+
+        .image-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .admin-footer {
+            margin-top: 3rem;
+            text-align: center;
+        }
+
+        .btn-logout {
+            background-color: #f44336;
+            color: white;
+        }
+
+        .btn-logout:hover {
+            background-color: #d32f2f;
+        }
+
+        .notification {
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            border-radius: var(--border-radius-sm);
+            font-weight: 500;
+        }
+
+        .notification.success {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+            border: 1px solid #c8e6c9;
+        }
+
+        .notification.error {
+            background-color: #ffebee;
+            color: #c62828;
+            border: 1px solid #ffcdd2;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .product-list {
+            margin-top: 3rem;
+        }
+
+        .product-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .product-table th,
+        .product-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .product-table th {
+            background-color: var(--color-background-alt);
+            font-weight: 600;
+        }
+
+        .btn-small {
+            padding: 5px 10px;
+            font-size: 0.8rem;
+        }
+
+        .btn-danger {
+            background-color: #f44336;
+            color: white;
+        }
+
+        .btn-warning {
+            background-color: #ff9800;
+            color: white;
+        }
+
+        /* Video input styles */
+        .video-container {
+            margin-top: 1rem;
+        }
+
+        .video-preview {
+            max-width: 100%;
+            height: auto;
+            border-radius: var(--border-radius-sm);
+        }
+        /* Admin form color overrides */
+        .admin-section .form-group label {
+            color: var(--color-text) !important;
+            text-shadow: none !important;
+        }
+        .admin-section .form-control {
+            background: #fff;
+            color: var(--color-text);
+        }
+        .admin-section .form-control::placeholder {
+            color: #666;
+            opacity: 1;
+        }
+        .admin-section .preview-card .product-content * {
+            color: var(--color-text);
+        }
+        .admin-section .product-price { color: var(--color-primary); }
+        .admin-section .developer-name { font-size: 0.85rem; color: var(--color-text-light); }
+        </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="logo">
+                <h1>D STUDIOS</h1>
+            </div>
+            <div class="nav-links">
+                <a href="index.html">Back to Site</a>
+                <span id="admin-name" class="admin-name"></span>
+            </div>
+        </nav>
+    </header>    <main>        <section class="admin-section" id="server-notice">
+            <div class="container">
+                <div class="notification" style="background-color: #e6f4ff; color: #03406a; padding: 15px; margin-bottom: 20px; border: 1px solid #b3e0ff; border-radius: 5px;">
+                    <h3>⚠️ Important: Start Application Server First</h3>
+                    <p>To use the product management dashboard, start the Node.js server:</p>
+                    <ol>
+                        <li>Open a terminal / PowerShell</li>
+                        <li>Navigate to the project folder: <code>cd "path\to\D STUDIOS"</code></li>
+                        <li>Install deps (first time only): <code>npm install</code></li>
+                        <li>Initialize DB (first time): <code>npm run init-db</code></li>
+                        <li>Start server: <code>npm start</code> (runs <code>node app.js</code>)</li>
+                    </ol>
+                    <p>Products are stored in MySQL now (not inside <code>script.js</code>).</p>
+                    <div id="server-status" style="margin-top: 15px; padding: 10px; border-radius: 4px; text-align: center; font-weight: bold;">
+                        Checking server connection...
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="admin-section" id="admin-login">
+            <div class="container">
+                <div class="admin-header">
+                    <h1>Administrator Login</h1>
+                </div>
+                
+                <div class="login-form">
+                    <div id="login-error" class="notification error hidden">
+                        Invalid credentials. Please try again.
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" class="form-control" placeholder="Administrator username">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" class="form-control" placeholder="Administrator password">
+                    </div>
+                    
+                    <button id="login-btn" class="btn btn-primary">Login</button>
+                </div>
+            </div>
+        </section>
+        
+        <section class="admin-section hidden" id="admin-dashboard">
+            <div class="container">
+                <div class="admin-header">
+                    <h1>Product Upload Dashboard</h1>
+                    <button id="logout-btn" class="btn btn-logout">Logout</button>
+                </div>
+                
+                <div id="success-message" class="notification success hidden">
+                    Product saved successfully!
+                </div>
+                
+                <div class="upload-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="product-name">Product Name</label>
+                            <input type="text" id="product-name" class="form-control" placeholder="Enter product name">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="product-category">Category</label>
+                            <select id="product-category" class="form-control">
+                                <option value="">Select category</option>
+                                <option value="python">Python GUI</option>
+                                <option value="ai">AI/ML Model</option>
+                                <option value="powerpoint">PowerPoint Template</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="product-price">Price ($)</label>
+                            <input type="number" id="product-price" class="form-control" min="0" step="0.01" placeholder="Enter price">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="developer-name">Developer Name</label>
+                            <input type="text" id="developer-name" class="form-control" placeholder="Developer name" value="Divan Ezadin">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="product-description">Description</label>
+                        <textarea id="product-description" class="form-control" placeholder="Enter product description"></textarea>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="product-image">Product Image</label>
+                            <input type="file" id="product-image" class="form-control" accept="image/*">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="image-url">or Image URL</label>
+                            <input type="text" id="image-url" class="form-control" placeholder="Enter image URL">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="product-video">Product Demo Video (optional)</label>
+                        <input type="file" id="product-video" class="form-control" accept="video/*">
+                        <div id="video-container" class="video-container hidden">
+                            <video id="video-preview" class="video-preview" controls></video>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="gumroad-url">Gumroad URL</label>
+                        <input type="text" id="gumroad-url" class="form-control" placeholder="https://gumroad.com/l/your-product">
+                    </div>
+                    
+                    <div class="preview-container">
+                        <h3>Product Preview</h3>
+                        <div class="preview-card">
+                            <div class="image-preview" id="preview-image">
+                                <span>Image Preview</span>
+                            </div>
+                            <div class="product-content">
+                                <span class="product-category" id="preview-category">Category</span>
+                                <h3 class="product-title" id="preview-title">Product Title</h3>
+                                <div class="product-price" id="preview-price">$0.00</div>
+                                <p class="product-description" id="preview-description">Product description will appear here.</p>
+                                <p class="developer-name" id="preview-developer">Developer: Divan Ezadin</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row" style="margin-top: 2rem;">
+                        <button id="save-product" class="btn btn-primary">Save Product</button>
+                        <button id="reset-form" class="btn btn-secondary">Reset Form</button>
+                    </div>
+                </div>
+                
+                <div class="product-list">
+                    <h2>Current Products</h2>
+                    <div id="product-table-container">
+                        <table class="product-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Category</th>
+                                    <th>Price</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="product-table-body">
+                                <!-- Products will be listed here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+      <script>
+        // API base (same origin)
+        const API_BASE = '';
+
+        // Check server connection (uses /health)
+        async function checkServerConnection() {
+            const serverStatus = document.getElementById('server-status');
+            const serverNotice = document.getElementById('server-notice');
+            try {
+                const res = await fetch(`${API_BASE}/health`);
+                if (!res.ok) throw new Error('Health check failed');
+                serverStatus.textContent = '✅ Server Connected - Ready';
+                serverStatus.style.backgroundColor = '#d4edda';
+                serverStatus.style.color = '#155724';
+                setTimeout(() => { serverNotice.style.display = 'none'; }, 2500);
+                return true;
+            } catch (e) {
+                serverStatus.textContent = '❌ Server Not Connected - Start with "npm start"';
+                serverStatus.style.backgroundColor = '#f8d7da';
+                serverStatus.style.color = '#721c24';
+                serverNotice.style.display = 'block';
+                return false;
+            }
+        }
+
+        checkServerConnection();
+        setInterval(checkServerConnection, 7000);
+
+        // Simple admin authentication (replace with real authentication in production)
+        const adminCredentials = {
+            username: 'admin',
+            password: 'dstudios123'
+        };
+        
+        // DOM Elements
+        const loginSection = document.getElementById('admin-login');
+        const dashboardSection = document.getElementById('admin-dashboard');
+        const loginBtn = document.getElementById('login-btn');
+        const logoutBtn = document.getElementById('logout-btn');
+        const loginError = document.getElementById('login-error');
+        const successMessage = document.getElementById('success-message');
+        const adminName = document.getElementById('admin-name');
+        
+        // Product form elements
+        const productNameInput = document.getElementById('product-name');
+        const productCategorySelect = document.getElementById('product-category');
+        const productPriceInput = document.getElementById('product-price');
+        const developerNameInput = document.getElementById('developer-name');
+        const productDescriptionInput = document.getElementById('product-description');
+        const productImageInput = document.getElementById('product-image');
+        const imageUrlInput = document.getElementById('image-url');
+        const productVideoInput = document.getElementById('product-video');
+        const videoContainer = document.getElementById('video-container');
+        const videoPreview = document.getElementById('video-preview');
+        const gumroadUrlInput = document.getElementById('gumroad-url');
+        const saveProductBtn = document.getElementById('save-product');
+        const resetFormBtn = document.getElementById('reset-form');
+        
+        // Preview elements
+        const previewImage = document.getElementById('preview-image');
+        const previewCategory = document.getElementById('preview-category');
+        const previewTitle = document.getElementById('preview-title');
+        const previewPrice = document.getElementById('preview-price');
+        const previewDescription = document.getElementById('preview-description');
+        const previewDeveloper = document.getElementById('preview-developer');
+        
+        // Product table
+        const productTableBody = document.getElementById('product-table-body');
+        
+        // Check if user is logged in
+        function checkLogin() {
+            const isLoggedIn = localStorage.getItem('dstudios_admin');
+            if (isLoggedIn === 'true') {
+                loginSection.classList.add('hidden');
+                dashboardSection.classList.remove('hidden');
+                loadProducts();
+                adminName.textContent = `Welcome, ${adminCredentials.username}`;
+            } else {
+                loginSection.classList.remove('hidden');
+                dashboardSection.classList.add('hidden');
+            }
+        }
+        
+        // Login event
+        loginBtn.addEventListener('click', () => {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            if (username === adminCredentials.username && password === adminCredentials.password) {
+                localStorage.setItem('dstudios_admin', 'true');
+                checkLogin();
+                loginError.classList.add('hidden');
+            } else {
+                loginError.classList.remove('hidden');
+            }
+        });
+        
+        // Logout event
+        logoutBtn.addEventListener('click', () => {
+            localStorage.removeItem('dstudios_admin');
+            checkLogin();
+        });
+        // Load products from MySQL via API
+        async function loadProducts() {
+            productTableBody.innerHTML = '<tr><td colspan="5">Loading...</td></tr>';
+            try {
+                const res = await fetch(`${API_BASE}/api/products`);
+                if (!res.ok) throw new Error('Failed to fetch');
+                const data = await res.json();
+                if (!data.success) throw new Error('API error');
+                const products = data.products;
+                if (!Array.isArray(products) || products.length === 0) {
+                    productTableBody.innerHTML = '<tr><td colspan="5">No products yet.</td></tr>';
+                    return;
+                }
+                productTableBody.innerHTML = '';
+                products.forEach(p => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${p.id}</td>
+                        <td>${p.name}</td>
+                        <td>${getCategoryDisplayName(p.category)}</td>
+                        <td>$${Number(p.price).toFixed(2)}</td>
+                        <td>
+                            <button class="btn btn-warning btn-small" onclick="editProduct(${p.id})">Edit</button>
+                            <button class="btn btn-danger btn-small" onclick="deleteProduct(${p.id})">Delete</button>
+                        </td>
+                    `;
+                    productTableBody.appendChild(row);
+                });
+            } catch (err) {
+                console.error(err);
+                productTableBody.innerHTML = `<tr><td colspan="5" style="color:#c62828">Error loading products</td></tr>`;
+            }
+        }
+        
+        // Get category display name
+        function getCategoryDisplayName(category) {
+            switch(category) {
+                case 'python':
+                    return 'Python GUI';
+                case 'ai':
+                    return 'AI/ML Model';
+                case 'powerpoint':
+                    return 'PowerPoint Template';
+                default:
+                    return category;
+            }
+        }
+        
+        // Product image preview
+        productImageInput.addEventListener('change', function() {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    previewImage.innerHTML = `<img src="${e.target.result}" alt="Preview">`;
+                    imageUrlInput.value = ''; // Clear URL input
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+        
+        // Image URL preview
+        imageUrlInput.addEventListener('input', function() {
+            if (this.value) {
+                previewImage.innerHTML = `<img src="${this.value}" alt="Preview">`;
+                productImageInput.value = ''; // Clear file input
+            } else {
+                previewImage.innerHTML = `<span>Image Preview</span>`;
+            }
+        });
+        
+        // Product video preview
+        productVideoInput.addEventListener('change', function() {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    videoPreview.src = e.target.result;
+                    videoContainer.classList.remove('hidden');
+                };
+                reader.readAsDataURL(file);
+            } else {
+                videoContainer.classList.add('hidden');
+            }
+        });
+        
+        // Live preview updates
+        productNameInput.addEventListener('input', function() {
+            previewTitle.textContent = this.value || 'Product Title';
+        });
+        
+        productCategorySelect.addEventListener('change', function() {
+            if (this.value) {
+                previewCategory.textContent = getCategoryDisplayName(this.value);
+            } else {
+                previewCategory.textContent = 'Category';
+            }
+        });
+        
+        productPriceInput.addEventListener('input', function() {
+            const price = parseFloat(this.value) || 0;
+            previewPrice.textContent = `$${price.toFixed(2)}`;
+        });
+        
+        developerNameInput.addEventListener('input', function() {
+            previewDeveloper.textContent = `Developer: ${this.value || 'Divan Ezadin'}`;
+        });
+        
+        productDescriptionInput.addEventListener('input', function() {
+            previewDescription.textContent = this.value || 'Product description will appear here.';
+    });        // Save product (re-implemented for MySQL API)
+    saveProductBtn.addEventListener('click', async function handleSaveClick() {
+            // Validate form
+            if (!productNameInput.value) {
+                alert('Please enter a product name.');
+                return;
+            }
+            
+            if (!productCategorySelect.value) {
+                alert('Please select a category.');
+                return;
+            }
+            
+            if (!productPriceInput.value) {
+                alert('Please enter a price.');
+                return;
+            }
+            
+            if (!productDescriptionInput.value) {
+                alert('Please enter a description.');
+                return;
+            }
+            
+            if (!imageUrlInput.value && !productImageInput.files[0]) {
+                alert('Please provide an image URL or upload an image.');
+                return;
+            }
+            
+            if (!gumroadUrlInput.value) {
+                alert('Please enter a Gumroad URL.');
+                return;
+            }
+            
+            // Show loading state
+            const originalButtonText = saveProductBtn.textContent;
+            saveProductBtn.textContent = 'Saving...';
+            saveProductBtn.disabled = true;
+            
+            // Get/upload image: if file selected, upload first
+            let finalImageUrl = imageUrlInput.value.trim();
+            if (!finalImageUrl && productImageInput.files[0]) {
+                try {
+                    const fd = new FormData();
+                    fd.append('image', productImageInput.files[0]);
+                    const uploadRes = await fetch(`${API_BASE}/api/upload/image`, { method: 'POST', body: fd });
+                    if (!uploadRes.ok) throw new Error('Upload failed');
+                    const uploadData = await uploadRes.json();
+                    if (!uploadData.success) throw new Error(uploadData.message || 'Upload failed');
+                    finalImageUrl = uploadData.url;
+                } catch (uploadErr) {
+                    console.error(uploadErr);
+                    alert('Image upload failed. Provide a direct image URL instead.');
+                    saveProductBtn.textContent = originalButtonText;
+                    saveProductBtn.disabled = false;
+                    return;
+                }
+            }
+
+            // Upload video if selected
+            let finalVideoUrl = '';
+            if (productVideoInput.files[0]) {
+                try {
+                    const vfd = new FormData();
+                    vfd.append('video', productVideoInput.files[0]);
+                    const vRes = await fetch(`${API_BASE}/api/upload/video`, { method: 'POST', body: vfd });
+                    if (!vRes.ok) throw new Error('Video upload failed');
+                    const vData = await vRes.json();
+                    if (!vData.success) throw new Error(vData.message || 'Video upload failed');
+                    finalVideoUrl = vData.url;
+                } catch (ve) {
+                    console.warn('Video upload failed, continuing without video', ve);
+                }
+            }
+            
+            try {
+                const editingProductId = this.dataset.editingProductId ? parseInt(this.dataset.editingProductId) : null;
+                const productPayload = {
+                    name: productNameInput.value,
+                    category: productCategorySelect.value,
+                    price: parseFloat(productPriceInput.value),
+                    description: productDescriptionInput.value,
+                    image: finalImageUrl,
+                    video: finalVideoUrl,
+                    gumroadUrl: gumroadUrlInput.value,
+                    developer: developerNameInput.value
+                };
+                if (editingProductId) {
+                    await updateExistingProduct({ id: editingProductId, ...productPayload });
+                    successMessage.classList.remove('hidden');
+                    successMessage.textContent = `Product "${productPayload.name}" updated.`;
+                    delete saveProductBtn.dataset.editingProductId;
+                } else {
+                    await createProduct(productPayload);
+                    successMessage.classList.remove('hidden');
+                    successMessage.textContent = `Product "${productPayload.name}" added.`;
+                }
+                loadProducts();
+            } catch (err) {
+                console.error(err);
+                alert('Error saving product');
+            } finally {
+                saveProductBtn.textContent = originalButtonText === 'Update Product' ? 'Save Product' : originalButtonText;
+                saveProductBtn.disabled = false;
+            }
+            
+            // Hide success message after 3 seconds
+            setTimeout(() => {
+                successMessage.classList.add('hidden');
+            }, 3000);
+            
+            // Reset form after save
+            resetForm();
+        });
+          // Reset form
+        resetFormBtn.addEventListener('click', resetForm);
+        
+        function resetForm() {
+            // Clear form fields
+            productNameInput.value = '';
+            productCategorySelect.value = '';
+            productPriceInput.value = '';
+            developerNameInput.value = 'Divan Ezadin';
+            productDescriptionInput.value = '';
+            productImageInput.value = '';
+            imageUrlInput.value = '';
+            productVideoInput.value = '';
+            gumroadUrlInput.value = '';
+            
+            // Reset previews
+            previewImage.innerHTML = '<span>Image Preview</span>';
+            previewCategory.textContent = 'Category';
+            previewTitle.textContent = 'Product Title';
+            previewPrice.textContent = '$0.00';
+            previewDescription.textContent = 'Product description will appear here.';
+            previewDeveloper.textContent = 'Developer: Divan Ezadin';
+            
+            // Reset video container
+            videoContainer.classList.add('hidden');
+            
+            // Reset the save button text and remove editing state
+            if (saveProductBtn.dataset.editingProductId) {
+                delete saveProductBtn.dataset.editingProductId;
+                saveProductBtn.textContent = 'Save Product';
+            }
+        }
+        
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', () => {
+            checkLogin();
+        });        // Function to update script.js with new product
+    async function createProduct(product) {
+            const res = await fetch(`${API_BASE}/api/products`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    name: product.name,
+                    category: product.category,
+                    price: product.price,
+                    description: product.description,
+                    image_url: product.image,
+            video_url: product.video || '',
+                    gumroad_url: product.gumroadUrl,
+                    developer_name: product.developer
+                })
+            });
+            if (!res.ok) throw new Error('Create failed');
+            const data = await res.json();
+            if (!data.success) throw new Error(data.message || 'Create failed');
+            return data;
+        }
+        
+        // Function to update an existing product
+    async function updateExistingProduct(product) {
+            const res = await fetch(`${API_BASE}/api/products/${product.id}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    name: product.name,
+                    category: product.category,
+                    price: product.price,
+                    description: product.description,
+                    image_url: product.image,
+            video_url: product.video || '',
+                    gumroad_url: product.gumroadUrl,
+                    developer_name: product.developer
+                })
+            });
+            if (!res.ok) throw new Error('Update failed');
+            const data = await res.json();
+            if (!data.success) throw new Error(data.message || 'Update failed');
+            return data;
+        }
+          // Function to save the updated script to the server
+    // (Deprecated) saveScriptToServer removed - using MySQL API now
+          // Edit product - load product data into the form
+        async function editProduct(id) {
+            try {
+                const res = await fetch(`${API_BASE}/api/products/${id}`);
+                if (!res.ok) throw new Error('Fetch failed');
+                const data = await res.json();
+                if (!data.success) throw new Error('API error');
+                const product = data.product;
+                document.querySelector('.upload-form').scrollIntoView({ behavior: 'smooth' });
+                productNameInput.value = product.name;
+                productCategorySelect.value = product.category;
+                productPriceInput.value = product.price;
+                productDescriptionInput.value = product.description;
+                imageUrlInput.value = product.image_url || '';
+                gumroadUrlInput.value = product.gumroad_url || '';
+                developerNameInput.value = product.developer_name || 'Divan Ezadin';
+                previewImage.innerHTML = product.image_url ? `<img src="${product.image_url}" alt="Preview">` : '<span>Image Preview</span>';
+                previewCategory.textContent = getCategoryDisplayName(product.category);
+                previewTitle.textContent = product.name;
+                previewPrice.textContent = `$${Number(product.price).toFixed(2)}`;
+                previewDescription.textContent = product.description;
+                previewDeveloper.textContent = `Developer: ${product.developer_name || 'Divan Ezadin'}`;
+                if (product.video_url) {
+                    videoPreview.src = product.video_url;
+                    videoContainer.classList.remove('hidden');
+                } else {
+                    videoPreview.removeAttribute('src');
+                    videoContainer.classList.add('hidden');
+                }
+                saveProductBtn.dataset.editingProductId = id;
+                saveProductBtn.textContent = 'Update Product';
+                successMessage.textContent = `Editing product "${product.name}"`;
+                successMessage.classList.remove('hidden');
+                setTimeout(() => successMessage.classList.add('hidden'), 2500);
+            } catch (e) {
+                alert('Error loading product');
+            }
+        }
+        
+        // Delete product
+        async function deleteProduct(id) {
+            if (!confirm(`Delete product ID ${id}? This cannot be undone.`)) return;
+            try {
+                const res = await fetch(`${API_BASE}/api/products/${id}`, { method: 'DELETE' });
+                if (!res.ok) throw new Error('Delete failed');
+                const data = await res.json();
+                if (!data.success) throw new Error(data.message || 'Delete failed');
+                successMessage.textContent = `Product ID ${id} deleted.`;
+                successMessage.classList.remove('hidden');
+                setTimeout(() => successMessage.classList.add('hidden'), 2000);
+                loadProducts();
+            } catch (e) {
+                alert('Error deleting product');
+            }
+        }
+
+    // (Cleaned) Removed deprecated override handlers – single authoritative handler defined above.
+    </script>
+</body>
+</html>

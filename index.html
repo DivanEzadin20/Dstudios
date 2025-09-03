@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D STUDIOS | Digital Products by Divan Ezadin</title>
+    <meta name="description" content="Premium digital products including Python GUI apps, AI/ML models, and professional PowerPoint templates.">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="logo">
+                <h1>D STUDIOS</h1>
+            </div>
+            <div class="nav-links">
+                <a href="#home" class="active" data-i18n="home">Home</a>
+                <a href="#about" data-i18n="about">About</a>
+                <a href="#products" data-i18n="products">Products</a>
+                <a href="#contact" data-i18n="contact">Contact</a>
+                <a href="/admin" data-i18n="admin" class="admin-link">Admin</a>
+            </div>
+            <div class="language-switcher">
+                <button onclick="changeLanguage('en')" class="active" id="lang-en">EN</button>
+                <button onclick="changeLanguage('ku')" id="lang-ku">KU</button>
+                <button onclick="changeLanguage('ar')" id="lang-ar">AR</button>
+            </div>
+            <button class="mobile-menu-btn" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero" id="home">
+            <div class="container">
+                <div class="hero-content">
+                    <h1 class="fade-in" data-i18n="heroTitle">Premium Digital Products for Professionals</h1>
+                    <p class="fade-in delay-1" data-i18n="heroSubtitle">Discover our collection of Python GUI apps, AI/ML models, and professional PowerPoint templates.</p>
+                    <div class="cta-buttons fade-in delay-2">
+                        <a href="#products" class="btn btn-primary" data-i18n="exploreProducts">Explore Products</a>
+                        <a href="#about" class="btn btn-secondary" data-i18n="learnMore">Learn More</a>
+                    </div>
+                </div><div class="hero-image fade-in delay-3">
+                    <div class="hero-shape">
+                        <span class="hero-shape-text">D STUDIOS</span>
+                    </div>
+                </div>
+            </div>
+    </section>
+    <!-- About Section -->
+        <section class="about" id="about">
+            <div class="container">
+                <div class="section-header">
+                    <h2 data-i18n="aboutTitle">About D STUDIOS</h2>
+                    <div class="accent-line"></div>
+                </div>
+                <div class="about-content">
+                    <div class="about-text">
+                        <p data-i18n="aboutDescription">D STUDIOS was founded by Divan Ezadin with a passion for creating high-quality digital products that help professionals and businesses streamline their workflows and enhance their presentations.</p>
+                        <h3 data-i18n="ourMission">Our Mission</h3>
+                        <p data-i18n="missionDescription">To provide innovative digital solutions that simplify complex tasks and empower users to achieve more.</p>
+                        <h3 data-i18n="ourProducts">Our Products</h3>
+                        <p data-i18n="productsDescription">We develop Python GUI applications, AI/ML models, and professional PowerPoint templates designed for various industries and use cases.</p>
+                    </div>
+                    <div class="about-stats">
+                        <div class="stat">
+                            <span class="stat-number">50+</span>
+                            <span class="stat-label">Products</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number">2k+</span>
+                            <span class="stat-label">Happy Customers</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number">4.9</span>
+                            <span class="stat-label">Average Rating</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </section>
+    <!-- Products Section -->
+        <section class="products" id="products">
+            <div class="container">
+                <div class="section-header">
+                    <h2 data-i18n="productsTitle">Our Products</h2>
+                    <div class="accent-line"></div>
+                </div>                <div class="product-filter">
+                    <button class="filter-btn active" data-filter="all" data-i18n="allCategories">All Categories</button>
+                    <button class="filter-btn" data-filter="python" data-i18n="pythonGUI">Python GUI</button>
+                    <button class="filter-btn" data-filter="ai" data-i18n="aimlModels">AI/ML Models</button>
+                    <button class="filter-btn" data-filter="powerpoint" data-i18n="powerpointTemplates">PowerPoint Templates</button>
+                </div>
+                <div class="product-grid" id="product-grid">
+                    <!-- Products will be dynamically inserted here by JavaScript -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="features">
+            <div class="container">
+                <div class="section-header">
+                    <h2 data-i18n="featuresTitle">Why Choose Our Products</h2>
+                    <div class="accent-line"></div>
+                </div>
+                <div class="features-grid">
+                    <div class="feature">
+                        <div class="feature-icon">🔒</div>
+                        <h3 data-i18n="highQuality">High Quality</h3>
+                        <p data-i18n="highQualityDesc">All our products are crafted with attention to detail and designed to meet professional standards.</p>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">🔄</div>
+                        <h3 data-i18n="easyToUse">Easy to Use</h3>
+                        <p data-i18n="easyToUseDesc">User-friendly interfaces and comprehensive documentation make our products accessible to everyone.</p>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">📞</div>
+                        <h3 data-i18n="customerSupport">Customer Support</h3>
+                        <p data-i18n="customerSupportDesc">We provide ongoing support to ensure you get the most out of our products.</p>
+                    </div>                    <div class="feature">
+                        <div class="feature-icon">💯</div>
+                        <h3 data-i18n="satisfactionGuaranteed">Satisfaction Guaranteed</h3>
+                        <p data-i18n="satisfactionDesc">Not happy with your purchase? We offer a 30-day money-back guarantee.</p>
+                    </div>
+                </div>
+            </div>
+    </section>
+    <!-- Contact Section -->
+        <section class="newsletter" id="contact">
+            <div class="container">
+                <div class="section-header">
+                    <h2 data-i18n="contactTitle">Get in Touch</h2>
+                    <div class="accent-line"></div>
+                </div>
+                <div class="newsletter-content">
+                    <p data-i18n="contactSubtitle">Have questions or need custom solutions? Reach out to us!</p>
+                    <div class="contact-email">
+                        <a href="mailto:dstudio.info.00@gmail.com" class="btn btn-primary">dstudio.info.00@gmail.com</a>
+                    </div>
+                      <form class="contact-form">
+                        <div class="form-group">
+                            <label for="name" data-i18n="fullName">Full Name</label>
+                            <input type="text" id="name" name="name" placeholder="Your name" data-i18n-placeholder="yourName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email" data-i18n="email">Email</label>
+                            <input type="email" id="email" name="email" placeholder="Your email" data-i18n-placeholder="yourEmail" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message" data-i18n="message">Message</label>
+                            <textarea id="message" name="message" rows="4" placeholder="Your message" data-i18n-placeholder="yourMessage" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary" data-i18n="send">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer/Contact Section -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-grid">                <div class="footer-brand">
+                    <h2>D STUDIOS</h2>
+                    <p data-i18n="footerTagline">Premium digital products for professionals</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="Twitter">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-1-4.8 4-7.6 7.5-4.5.8-.5 1.5-1 2.5-1.5z"></path></svg>
+                        </a>
+                        <a href="#" aria-label="Instagram">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                        </a>
+                        <a href="#" aria-label="GitHub">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                        </a>
+                    </div>
+                </div>                <div class="footer-links">
+                    <h3 data-i18n="linksTitle">Links</h3>
+                    <ul>
+                        <li><a href="#" data-i18n="home">Home</a></li>
+                        <li><a href="#about" data-i18n="about">About</a></li>
+                        <li><a href="#products" data-i18n="products">Products</a></li>
+                        <li><a href="#contact" data-i18n="contact">Contact</a></li>
+                        <li><a href="/admin" data-i18n="admin">Admin</a></li>
+                    </ul>
+                </div>                <div class="footer-contact">
+                    <h3 data-i18n="contact">Contact</h3>
+                    <p><span data-i18n="emailLabel">Email</span>: dstudio.info.00@gmail.com</p>
+                    <p><span data-i18n="supportLabel">Support</span>: dstudio.info.00@gmail.com</p>
+                </div>                <div class="footer-newsletter">
+                    <h3 data-i18n="emailUs">Email Us</h3>
+                    <p data-i18n="reachOut">Reach out with questions or inquiries:</p>
+                    <div class="footer-contact-email">
+                        <a href="mailto:dstudio.info.00@gmail.com">dstudio.info.00@gmail.com</a>
+                    </div>
+                </div>
+            </div>            <div class="footer-bottom">
+                <p data-i18n="copyright">&copy; 2025 D STUDIOS by Divan Ezadin. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    <script src="translations.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
